@@ -1,6 +1,11 @@
 # Codex 后端切换器
 
+**codex-backend-switcher** · Windows · PowerShell 5.1 · MIT
+
 在 **ChatGPT 官方账号** 和 **多个第三方中转站** 之间，一键切换 Codex 的后端。
+
+> One-click backend switcher for Codex on Windows — jump between the official ChatGPT
+> account and any number of third-party API relays, without hand-editing `config.toml`.
 
 > 解决的问题：Codex 只有一个凭据槽位（`auth.json`），账号登录和中转 key 登录互斥。
 > 手动改 `config.toml` + 换 key + 重启 App 很麻烦，还容易改坏。
@@ -180,6 +185,17 @@ powershell -File .\src\CodexSwitcher.ps1 list -Root C:\temp\fake-codex
 
 ---
 
+## 关键词 / Keywords
+
+方便检索，也方便你判断这个项目是不是你要的：
+
+`codex 切换器` · `codex 后端切换` · `codex 中转站` · `codex 多后端` · `codex 账号切换` ·
+`codex 换 api` · `codex apikey` · `codex provider switcher` · `codex backend switch` ·
+`codex relay switcher` · `chatgpt account vs api key` · `codex-cli` · `powershell` · `windows`
+
+---
+
 ## 许可
 
 [MIT](LICENSE)
+
