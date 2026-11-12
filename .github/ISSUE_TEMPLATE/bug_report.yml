@@ -1,0 +1,101 @@
+name: 问题反馈
+description: 切换失败、配置异常、报错、行为不符合预期
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈。请把下面填完整——**信息越全，定位越快**。
+
+        > ⚠️ 提交前请删掉所有以 `sk-` 开头的 API key，以及 `auth.json` 的内容。
+        > 有敏感信息的话，把 `providers.json` 的 `base_url` 也打码。
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 发生了什么
+      description: 你做了什么、看到了什么、期望是什么
+      placeholder: |
+        我双击菜单选了 3（apimart），输入 key 后报错退出，配置没有变化。
+        期望：切换成功并重新打开 Codex。
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      description: 从干净状态开始，一步步写
+      placeholder: |
+        1. 完全退出 Codex
+        2. 双击桌面「Codex 切换」
+        3. 选择 3
+        4. 粘贴 key 后回车
+    validations:
+      required: true
+
+  - type: textarea
+    id: error
+    attributes:
+      label: 完整报错
+      description: 原样粘贴，不要只截一行
+      render: text
+      placeholder: |
+        ==============================================
+        校验 https://xxx/v1 ...
+        连不通或 key 无效，已取消，当前配置未改动。
+          厂商/系统返回: ...
+    validations:
+      required: true
+
+  - type: input
+    id: env
+    attributes:
+      label: 环境
+      description: 系统版本 / PowerShell 版本 / Codex 版本
+      placeholder: Windows 11 23H2 · PowerShell 5.1 · Codex 0.167.0
+    validations:
+      required: true
+
+  - type: textarea
+    id: status
+    attributes:
+      label: status 输出
+      description: |
+        在 PowerShell 里运行下面这条，把输出粘过来（key 会打码，但仍请自行检查）：
+        ```powershell
+        powershell -File "$env:LOCALAPPDATA\CodexSwitcher\src\CodexSwitcher.ps1" status
+        ```
+      render: text
+    validations:
+      required: false
+
+  - type: textarea
+    id: config
+    attributes:
+      label: providers.json 里对应的站点（已打码）
+      description: 只贴出问题的那一项即可，**务必删掉真实域名和 key**
+      render: json
+      placeholder: |
+        {
+          "id": "apimart",
+          "kind": "relay",
+          "base_url": "https://***/v1",
+          "model": "gpt-6.1-sol",
+          "proxy": "http://127.0.0.1:7890",
+          "extra": {}
+        }
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: 提交前确认
+      options:
+        - label: 我已删除所有真实 API key / 凭据
+          required: true
+        - label: 我已尝试完全退出 Codex（托盘退出）后重试
+          required: true
+        - label: 我已看过 docs/troubleshooting.md
+          required: false

@@ -1,0 +1,50 @@
+name: smoke
+
+# 只在改到代码/测试时跑，避免改文档也触发
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "bin/**"
+      - "tests/**"
+      - ".github/workflows/**"
+  pull_request:
+    paths:
+      - "src/**"
+      - "bin/**"
+      - "tests/**"
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 环境信息
+        shell: powershell
+        run: |
+          $PSVersionTable | Out-String
+          Write-Host "OS: $([System.Environment]::OSVersion.VersionString)"
+
+      - name: 离线冒烟测试
+        shell: powershell
+        run: .\tests\smoke.ps1
+
+      - name: 所有脚本可被解析（语法检查）
+        shell: powershell
+        run: |
+          $failed = 0
+          Get-ChildItem -Recurse -Filter *.ps1 | ForEach-Object {
+            $errors = $null
+            [void][System.Management.Automation.Language.Parser]::ParseFile(
+              $_.FullName, [ref]$null, [ref]$errors)
+            if ($errors -and $errors.Count -gt 0) {
+              Write-Host "语法错误: $($_.FullName)" -ForegroundColor Red
+              $errors | ForEach-Object { Write-Host "  $_" }
+              $failed = 1
+            }
+          }
+          if ($failed -ne 0) { exit 1 }
+          Write-Host "全部 .ps1 解析通过" -ForegroundColor Green

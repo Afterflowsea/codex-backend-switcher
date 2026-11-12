@@ -1,0 +1,58 @@
+name: 功能建议
+description: 想要的新能力、用起来不顺手的地方
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        先说清楚**你要解决什么问题**，比直接给方案更有用——
+        有时候现有配置就能做到，只是文档没写明白。
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 你遇到的不便
+      description: 现在怎么做、哪里难受
+      placeholder: |
+        我有 5 个中转站，每次切都要按回车确认关闭 Codex，
+        希望能加一个"静默切换"参数。
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 你希望的方案
+      placeholder: |
+        给 CodexSwitcher.ps1 加 -Quiet，跳过关闭确认。
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 考虑过的替代方案
+      description: 试过什么、为什么不行
+    validations:
+      required: false
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: 影响范围
+      options:
+        - 只是配置/文档
+        - 新增一个参数或开关
+        - 新增一个站点类型
+        - 改切换流程本身
+        - 其它
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: 提交前确认
+      options:
+        - label: 我搜索过现有 Issue，没有重复
+          required: true

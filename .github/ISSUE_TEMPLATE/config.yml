@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 先看《故障排查》
+    url: https://github.com/Afterflowsea/codex-backend-switcher/blob/main/docs/troubleshooting.md
+    about: 401 / 分组没有该模型 / 代理不生效 / 切换后模型不对 —— 这里基本都有答案
+  - name: 看《配置说明》
+    url: https://github.com/Afterflowsea/codex-backend-switcher/blob/main/docs/configuration.md
+    about: providers.json 每个字段是什么意思、base_url 要不要带 /v1

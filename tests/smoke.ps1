@@ -11,6 +11,12 @@ param()
 
 $ErrorActionPreference = 'Stop'
 
+# 统一编码，避免在英文系统/CI 上中文断言失败
+try {
+    [Console]::OutputEncoding = [Text.Encoding]::UTF8
+    $OutputEncoding = [Text.Encoding]::UTF8
+} catch { }
+
 $repoRoot = Split-Path $PSScriptRoot -Parent
 $libDir   = Join-Path $repoRoot 'src\lib'
 $entry    = Join-Path $repoRoot 'src\CodexSwitcher.ps1'
@@ -156,6 +162,18 @@ Assert-Match $out '当前站点' 'status 能输出当前站点'
 
 $out = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $entry no-such-id -Root $temp 2>&1 | Out-String
 Assert-True ($LASTEXITCODE -ne 0) '未知站点返回非 0'
+
+Write-Host ''
+Write-Host '  9. 文件编码（.ps1 必须 UTF-8 with BOM）'
+$noBom = @()
+Get-ChildItem $repoRoot -Recurse -Filter *.ps1 | ForEach-Object {
+    $b = [IO.File]::ReadAllBytes($_.FullName)
+    $hasBom = ($b.Length -ge 3) -and ($b[0] -eq 0xEF) -and ($b[1] -eq 0xBB) -and ($b[2] -eq 0xBF)
+    if (-not $hasBom) { $noBom += $_.Name }
+}
+$msg = '所有 .ps1 带 BOM'
+if ($noBom.Count -gt 0) { $msg += '（缺: ' + ($noBom -join ', ') + '）' }
+Assert-True ($noBom.Count -eq 0) $msg
 
 # ---------- 清理 ----------
 Remove-Item -LiteralPath $temp -Recurse -Force -ErrorAction SilentlyContinue

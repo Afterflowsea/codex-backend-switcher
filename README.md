@@ -1,6 +1,11 @@
 # Codex 后端切换器
 
-**codex-backend-switcher** · Windows · PowerShell 5.1 · MIT
+**codex-backend-switcher**
+
+[![version](assets/badges/version.svg)](https://github.com/Afterflowsea/codex-backend-switcher/releases)
+[![license](assets/badges/license.svg)](LICENSE)
+![platform](assets/badges/platform.svg)
+![PowerShell](assets/badges/powershell.svg)
 
 在 **ChatGPT 官方账号** 和 **多个第三方中转站** 之间，一键切换 Codex 的后端。
 
