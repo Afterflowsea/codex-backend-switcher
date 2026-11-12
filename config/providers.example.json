@@ -1,0 +1,35 @@
+[
+  {
+    "id": "account",
+    "name": "ChatGPT 账号",
+    "kind": "account",
+    "base_url": "",
+    "model": "gpt-6-luna",
+    "proxy": "",
+    "extra": {},
+    "note": "官方登录。模型由订阅档位决定，选择器里只列开放给你的那几个"
+  },
+  {
+    "id": "relay-direct",
+    "name": "中转站 A（直连）",
+    "kind": "relay",
+    "base_url": "https://your-relay-a.example.com/v1",
+    "model": "",
+    "proxy": "",
+    "extra": {},
+    "note": "base_url 是否需要 /v1 取决于服务商；不确定就先填 /v1，工具会自动回退尝试"
+  },
+  {
+    "id": "relay-proxy",
+    "name": "中转站 B（走代理）",
+    "kind": "relay",
+    "base_url": "https://your-relay-b.example.com/v1",
+    "model": "",
+    "proxy": "http://127.0.0.1:7890",
+    "extra": {
+      "web_search": "live",
+      "model_context_window": 1000000
+    },
+    "note": "国际线路的站点必须配 proxy，否则 Codex 会直连超时"
+  }
+]

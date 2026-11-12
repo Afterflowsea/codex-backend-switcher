@@ -1,0 +1,26 @@
+# ============================================================
+# 运行期状态：包含 API key 与登录凭据，绝对不能提交
+# ============================================================
+keys/
+*.key
+state.txt
+proxy-state.txt
+auth.json
+auth.*.json
+providers.json
+.switch/
+
+# 快捷方式与本地安装产物
+*.lnk
+install/
+
+# 日志
+*.log
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+Desktop.ini
+.DS_Store
