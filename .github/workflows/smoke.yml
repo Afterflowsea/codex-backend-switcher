@@ -36,13 +36,13 @@ jobs:
         shell: powershell
         run: |
           $failed = 0
-          Get-ChildItem -Recurse -Filter *.ps1 | ForEach-Object {
+          foreach ($f in (Get-ChildItem -Recurse -Filter *.ps1)) {
+            $tokens = $null
             $errors = $null
-            [void][System.Management.Automation.Language.Parser]::ParseFile(
-              $_.FullName, [ref]$null, [ref]$errors)
+            [void][System.Management.Automation.Language.Parser]::ParseFile($f.FullName, [ref]$tokens, [ref]$errors)
             if ($errors -and $errors.Count -gt 0) {
-              Write-Host "语法错误: $($_.FullName)" -ForegroundColor Red
-              $errors | ForEach-Object { Write-Host "  $_" }
+              Write-Host "语法错误: $($f.FullName)" -ForegroundColor Red
+              foreach ($e in $errors) { Write-Host "  $e" }
               $failed = 1
             }
           }
