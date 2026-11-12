@@ -94,7 +94,36 @@ git -C codex-backend-switcher archive --format=zip --prefix=codex-backend-switch
 
 ---
 
-## 6. 提高被搜到的概率
+## 6. 社交预览图
+
+仓库页 Settings → Social preview → Upload an image。
+
+仓库里已经准备好一张 1280×640 的图：
+
+```
+assets/demo/social-preview.png
+```
+
+需要改文案就重新生成：
+
+```powershell
+python assets/demo/make_social_preview.py
+```
+
+分享链接到群/推特时显示的就是它，比默认的仓库头像显眼得多。
+
+演示动图同样可以重新生成：
+
+```powershell
+python assets/demo/make_demo_gif.py            # 输出 assets/demo/demo.gif
+python assets/demo/make_demo_gif.py --preview   # 只出一张静帧检查排版
+```
+
+脚本里改 `MENU` / `RESULT` 两个列表就能改演示内容，改颜色改 `C_*` 常量。
+
+---
+
+## 7. 提高被搜到的概率
 
 已经做了的：
 
@@ -110,7 +139,7 @@ git -C codex-backend-switcher archive --format=zip --prefix=codex-backend-switch
 
 ---
 
-## 7. 开源前的自检
+## 8. 开源前的自检
 
 ```powershell
 # 确认没有密钥类文件被提交

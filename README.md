@@ -11,6 +11,8 @@
 > 手动改 `config.toml` + 换 key + 重启 App 很麻烦，还容易改坏。
 > 这个工具把「校验 → 关闭 App → 改配置 → 恢复凭据 → 重开 App」做成一次操作。
 
+![切换演示](assets/demo/demo.gif)
+
 ---
 
 ## 特性
