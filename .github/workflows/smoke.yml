@@ -32,19 +32,8 @@ jobs:
         shell: powershell
         run: .\tests\smoke.ps1
 
+      # 逻辑放在 tests\syntax-check.ps1 里：workflow 内联脚本是 UTF-8 无 BOM，
+      # 含中文时 PowerShell 5.1 会解析失败（表现为 0 秒失败）。
       - name: 所有脚本可被解析（语法检查）
         shell: powershell
-        run: |
-          $failed = 0
-          foreach ($f in (Get-ChildItem -Recurse -Filter *.ps1)) {
-            $tokens = $null
-            $errors = $null
-            [void][System.Management.Automation.Language.Parser]::ParseFile($f.FullName, [ref]$tokens, [ref]$errors)
-            if ($errors -and $errors.Count -gt 0) {
-              Write-Host "语法错误: $($f.FullName)" -ForegroundColor Red
-              foreach ($e in $errors) { Write-Host "  $e" }
-              $failed = 1
-            }
-          }
-          if ($failed -ne 0) { exit 1 }
-          Write-Host "全部 .ps1 解析通过" -ForegroundColor Green
+        run: .\tests\syntax-check.ps1
