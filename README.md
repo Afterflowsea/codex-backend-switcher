@@ -113,7 +113,7 @@ codex-switcher/
 |---|---|---|
 | Windows | 10 / 11 | 用到 `%LOCALAPPDATA%`、WScript.Shell 建快捷方式 |
 | PowerShell | 5.1（系统自带） | 不需要装 PowerShell 7 |
-| Codex 桌面端 | 任意近期版本 | 需要 `codex.exe`，用于 `codex app` 启动和 `codex login` |
+| Codex 桌面端 | 任意近期版本 | 用于启动 App（优先直连 `ChatGPT.exe`，回退 `codex app`）和 `codex login` |
 | Python + Pillow | 3.9+ / 10+ | **仅**重新生成图标时需要，运行本工具不需要 |
 
 没有 npm、没有编译步骤，克隆下来就能跑。
@@ -128,7 +128,7 @@ codex-switcher/
 2. **关闭 Codex**：App 退出时会把内存里的设置写回 `config.toml`，必须先关
 3. **写文件**：`config.toml` 增删 provider 块、`auth.json` 换成对应凭据、设置代理变量
 4. **恢复登录态**：账号模式还原备份的 tokens；没有备份才拉起 device code 登录
-5. **重开 Codex**：`codex app`
+5. **重开 Codex**：直接启动主程序（比 `codex app` 快约 6 秒）
 
 细节见 [docs/how-it-works.md](docs/how-it-works.md)。
 
