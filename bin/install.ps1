@@ -36,6 +36,15 @@ foreach ($item in @('src', 'bin', 'assets')) {
     if (Test-Path -LiteralPath $dst) { Remove-Item -LiteralPath $dst -Recurse -Force }
     Copy-Item -LiteralPath $src -Destination $dst -Recurse -Force
 }
+
+# .bat 必须是 CRLF 且纯 ASCII：cmd.exe 在 LF 换行 + 非 ASCII 字节时会解析错乱，
+# 表现为 "'x' is not recognized as an internal or external command"，双击无任何反应。
+# 仓库里已经保证，这里再兜一次底，避免 clone 时的换行转换把文件搞坏。
+foreach ($b in (Get-ChildItem -Path (Join-Path $InstallDir 'bin') -Filter '*.bat' -ErrorAction SilentlyContinue)) {
+    $t = [IO.File]::ReadAllText($b.FullName, [Text.Encoding]::UTF8)
+    $t = ($t -replace "`r?`n", "`r`n")
+    [IO.File]::WriteAllText($b.FullName, $t, (New-Object Text.UTF8Encoding($false)))
+}
 Write-Host '  [1/3] 程序文件已就位' -ForegroundColor Green
 
 # ---------- 2. 初始化状态目录 ----------

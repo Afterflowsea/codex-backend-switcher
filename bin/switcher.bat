@@ -1,14 +1,18 @@
 @echo off
 rem ============================================================
-rem  Codex 后端切换器 - 菜单入口
-rem  这个文件只负责起一个 PowerShell 窗口，真正的逻辑在 bin\menu.ps1
+rem  Codex backend switcher - menu launcher
+rem  This file only starts a PowerShell window; logic lives in bin\menu.ps1
+rem
+rem  IMPORTANT: keep this file ASCII-only with CRLF line endings.
+rem  cmd.exe misparses non-ASCII bytes when the file uses LF-only endings,
+rem  which shows up as errors like "'x' is not recognized as a command".
 rem ============================================================
 setlocal
 title Codex Switcher
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0menu.ps1"
 if errorlevel 1 (
     echo.
-    echo 启动失败。请确认已运行 bin\install.ps1 完成安装。
+    echo Failed to start. Run bin\install.ps1 first, or check the PowerShell output above.
     pause
 )
 endlocal

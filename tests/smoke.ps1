@@ -175,6 +175,24 @@ $msg = '所有 .ps1 带 BOM'
 if ($noBom.Count -gt 0) { $msg += '（缺: ' + ($noBom -join ', ') + '）' }
 Assert-True ($noBom.Count -eq 0) $msg
 
+Write-Host ''
+Write-Host '  10. .bat 必须是 CRLF + 纯 ASCII'
+# cmd.exe 在 LF 换行 + 非 ASCII 字节时会解析错乱（"'x' is not recognized"），
+# 双击图标表现为毫无反应。这个坑踩过一次，加检查防回归。
+$badBat = @()
+foreach ($f in (Get-ChildItem -Path $repoRoot -Recurse -Filter *.bat)) {
+    $bytes = [IO.File]::ReadAllBytes($f.FullName)
+    $lf = ($bytes | Where-Object { $_ -eq 0x0A }).Count
+    $cr = ($bytes | Where-Object { $_ -eq 0x0D }).Count
+    $nonAscii = ($bytes | Where-Object { $_ -gt 127 }).Count
+    if ($lf -ne $cr -or $nonAscii -gt 0) {
+        $badBat += ($f.Name + '(LF=' + $lf + ',CR=' + $cr + ',非ASCII=' + $nonAscii + ')')
+    }
+}
+$msg = '.bat 换行与编码正确'
+if ($badBat.Count -gt 0) { $msg += '（问题: ' + ($badBat -join ', ') + '）' }
+Assert-True ($badBat.Count -eq 0) $msg
+
 # ---------- 清理 ----------
 Remove-Item -LiteralPath $temp -Recurse -Force -ErrorAction SilentlyContinue
 
